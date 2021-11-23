@@ -1,0 +1,93 @@
+#include <iostream>
+#include <string>
+#include <stack> 
+#define size 200
+using namespace std;
+int pr(char ch) {
+	if (ch == '^')
+		return 3;
+	if (ch == '*' || ch == '/' || ch == '%')
+		return 2;
+	if (ch == '+' || ch == '-')
+		return 1;
+	else {
+		return -1;
+	}
+}
+int eval(int op1, int op2, char operate) {
+	switch (operate) {
+	case '*': return op2 * op1;
+	case '/': return op2 / op1;
+	case '+': return op2 + op1;
+	case '-': return op2 - op1;
+	default: return 0;
+	}
+}
+string postfixcon(string str) {
+	stack <char> st;
+	string ss = "";
+	for (int i = 0; i < str.length(); i++) {
+		char c = str[i];
+		if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
+			ss += c;
+		else if (c == '(')
+			st.push('(');
+		else if (c == ' ')
+			continue;
+		else if (c == ')') {
+			while (st.top() != '(') {
+				ss += st.top();
+				st.pop();
+			}
+			st.pop();
+		}
+		else {
+			while ((!st.empty()) && (pr(str[i]) <= pr(st.top())))
+			{
+				ss += st.top();
+				st.pop();
+			}
+			st.push(c);
+		}
+	}
+	while (!st.empty()) {
+		ss += st.top();
+		st.pop();
+	}
+	cout << "Postfix : " << "\n" << ss;
+	return ss;
+}
+int postfixeva(string ev) {
+	int len = ev.length();
+	stack <int> s;
+	int i = 0;
+	char ch;
+	int val;
+	while (i < len) {
+		ch = ev[i];
+		if (isdigit(ch)) {
+			// nt operand
+			// push the digit to stack
+			s.push(ch - '0');
+		}
+		else {
+			int op1 = s.top();
+			s.pop();
+			int op2 = s.top();
+			s.pop();
+			val = eval(op1, op2, ch);
+			// push the value 
+			s.push(val);
+		}
+		i++;
+	}
+	return val;
+}
+int main() {
+	string infix, postfix;
+	cout << "Enter the infix expression : " << "\n";
+	cin >> infix;
+	string ev = postfixcon(infix);
+	cout <<"\n"<<postfixeva(ev);
+	return 0;
+}
