@@ -1,0 +1,105 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <stack> 
+#define size 200
+using namespace std;
+int pr(char ch) {
+	if (ch == '^')
+		return 3;
+	if (ch == '*' || ch == '/' || ch == '%')
+		return 2;
+	if (ch == '+' || ch == '-')
+		return 1;
+	else {
+		return -1;
+	}
+}
+int eval(int op1, int op2, char operate) {
+	switch (operate) {
+	case '*': return op2 * op1;
+	case '/': return op2 / op1;
+	case '+': return op2 + op1;
+	case '-': return op2 - op1;
+	default: return 0;
+	}
+}
+bool isoperator(char x) {
+	switch (x) {
+	case '+':
+	case '-':
+	case '/':
+	case '*':
+		return 1;
+	}
+	return 0;
+}
+string infixToPostfix(string infix){
+	infix = '(' + infix + ')';
+	int l = infix.length();
+	stack<char> s;
+	string output;
+	for (int i = 0; i < l; i++) {
+		char c = infix[i];
+		if (isalpha(c) || isdigit(c))
+			output += c;
+		else if (c == '(')
+			s.push('(');
+		else if (c == ')') {
+			while (s.top() != '(') {
+				output += s.top();
+				s.pop();
+			}
+			s.pop();
+		}
+		else{
+			if (isoperator(s.top())){
+				if (c == '^'){
+					while (pr(c) <= pr(s.top()))
+					{
+						output += s.top();
+						s.pop();
+					}
+				}
+				else{
+					while (pr(c) < pr(s.top())){
+						output += s.top();
+						s.pop();
+					}
+
+				} 
+				s.push(infix[i]);
+			}
+		}
+	}
+	while (!s.empty()) {
+		output += s.top();
+		s.pop();
+	}
+	return output;
+}
+string infixToPrefix(string infix){
+	int l = infix.length();
+	reverse(infix.begin(), infix.end());
+	for (int i = 0; i < l; i++) {
+		if (infix[i] == '(') {
+			infix[i] = ')';
+			i++;
+		}
+		else if (infix[i] == ')') {
+			infix[i] = '(';
+			i++;
+		}
+	}
+	string prefix = infixToPostfix(infix);
+	reverse(prefix.begin(), prefix.end());
+	return prefix;
+}
+int main() {
+	string infix, postfix;
+	cout << "Enter the infix expression : " << "\n";
+	cin >> infix;
+	string ev = infixToPrefix(infix);
+	cout << ev << "\n";
+	return 0;
+}
