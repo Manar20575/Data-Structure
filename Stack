@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+const int msize = 100;
+class stack {
+private:
+	int t;
+	int item[msize];
+public:
+	stack() {
+		int t = -1;
+	}
+	void push(int n);
+	int pop();
+	int is_full();
+	int is_empty();
+	void display();
+	int top() {
+		return item[t];
+	}
+}obj;
+int stack::is_empty(){
+		if (t == -1)
+			return 1;
+		return 0;
+	}
+int stack::is_full() {
+	if (t == msize - 1)
+		return 1;
+	return 0;
+}
+void stack::push(int n) {
+	if (is_full()) {
+		cout << "Stack is overflow" << "/n";
+		exit(0);
+	}
+	else {
+		if ( n >= 0) {
+			item[t] = n;
+			t++;
+		}
+		else {
+			cout << "u enter negative n plz enter positive n, '-'";
+		}
+	}
+}
+int stack::pop() {
+	if (is_empty()) {
+		cout << "Stack is underflow"<<"\n";
+		exit(0);
+	}
+	else {
+		int val = item[t];
+		t--;
+		return val;
+	}
+}
+void stack::display() {
+	for (int i = 0; i <=t-1;i++) {
+		cout << item[i] << " ";
+	}
+}
+int main() {
+    obj.push(5);
+	obj.push(-6);
+	obj.display();
+	cout << "..................\n";
+	system("pause");
+	return 0;
+}
