@@ -1,0 +1,113 @@
+#include <iostream>
+using namespace std;
+class linkedlist {
+	struct node {
+		int item;
+		node* next;
+	};
+	node* first;
+	node* last;
+	int len;
+public:
+	linkedlist() {
+		first = last = NULL;
+		len = 0;
+	}
+	bool is_empty() {
+		return len == 0; //or first == NULL
+	}
+	void insertfirst(int ele) {
+		node* new_node = new node;
+		new_node->item = ele;
+		if (len == 0) {
+			first = last = new_node;
+			new_node->next = NULL;
+		}
+		else {
+			new_node->next = first;
+			first = new_node;
+		}
+		len++;
+	}
+	void insertlast(int ele) {
+		node* new_node = new node;
+		new_node->item = ele;
+		if (len == 0) {
+			first = last = new_node;
+			new_node->next = NULL;
+		}
+		else {
+			last->next = new_node;
+			new_node->next = NULL;
+			last = new_node;
+		}
+		len++;
+	}
+	void insertatpos(int pos, int ele) {
+		if (pos = 0 || pos > len) {
+			cout << "Out of range\n";
+		}
+		else {
+			node* new_node = new node;
+			new_node->item = ele;
+			if (pos == 0)
+				insertfirst(ele);
+			else if (pos == len)
+				insertlast(ele);
+			else {
+				node* cur = first;
+				for (int i = 1;i < pos;i++) {
+					cur = cur->next;
+				}
+				new_node->next = cur->next;
+				cur->next = new_node;
+				len++;
+			}
+		}
+	}
+	void print() {
+		node* cur = first;
+		while (cur!=NULL) {
+			cout << cur->item << " ";
+			cur = cur->next;
+		}
+	}
+};
+int main() {
+	linkedlist l;
+	int n, choice, element, pos;
+	char test;
+	do {
+		cout << "1.Insert First\n";
+		cout << "2.Insert Last\n";
+		cout << "2.Insert Position\n";
+		cout << "4.Print\n";
+		cin >> choice;
+		switch (choice) {
+		case 1:
+			cout << "plzz, Enter the element to insert it\n";
+			cin >> element;
+			l.insertfirst(element);
+			break;
+		case 2:
+			cout << "plzz, Enter the element to insert it\n";
+			cin >> element;
+			l.insertlast(element);
+			break;
+		case 3:
+			cout << "plzz, Enter the pos to insert it\n";
+			cin >> pos;
+			cout << "plzz, Enter the element to insert it\n"; 
+			cin >> element;
+			l.insertatpos(pos, element);
+			break;
+		case 4:
+			l.print();
+			break;
+		default:
+			cout << "plzz, Enter correct number in list \n";
+		}
+		cout << "to cont plzz, enter c/C\n";
+		cin >> test;
+	} 	while (test == 'C' || test == 'c');
+}
