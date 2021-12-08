@@ -70,3 +70,73 @@ int main() {
 	system("pause");
 	return 0;
 }
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+//Same idea different implementation
+#include<iostream>
+using namespace std;
+#define size 100
+class stack {
+private:
+	int arr[size];
+	int top;
+public:
+	stack() {
+		top = -1;
+	}
+	void pop() {
+		int item;
+		if (top == -1) {
+			cout << "stack is empty";
+			exit(0);
+		}
+		else {
+			item = arr[top--];
+			cout << "\n Number deleted is : " << item;
+		}
+	}
+	void push() {
+		int item;
+		if (top == size - 1) {
+			cout << "\n Stack is overflow";
+			exit(0);
+		}
+		else {
+			cout << "\n Enter the num : "<<endl;
+			cin >> item;
+			arr[++top] = item;
+		}
+	}
+	void display() {
+			for (int i = top;i >= 0;i--) {
+				cout << arr[i] << " ";
+			}
+	}
+};
+int main() {
+	stack s;
+	int choise;
+	char c;
+	do {
+		cout << "1.push\n";
+		cout << "2.pop\n";
+		cout << "3.display stack\n";
+		cout << "4.continue type char c\n";
+		cin >> choise;
+		switch (choise) {
+		case 1:
+			s.push();
+			break;
+		case 2:
+			s.pop();
+			break;
+		case 3:
+			s.display();
+			break;
+		default:
+			cout << " \n u enter wrong choise ";
+		}
+		cout << "to cont cin c/C";
+		cin >> c;
+	} 
+	while (c == 'c' || c == 'C');
+}
