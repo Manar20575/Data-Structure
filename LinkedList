@@ -1,3 +1,6 @@
+//If there is anything not clear, feel free to send a message/comment to me 
+//Manar Hamada Elsayed 
+//BFCAI
 #include <iostream>
 using namespace std;
 class linkedlist {
