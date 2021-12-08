@@ -71,7 +71,8 @@ int main() {
 	return 0;
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
-//Same idea different implementation
+//Same idea different implementation 
+// Data from user nt static
 #include<iostream>
 using namespace std;
 #define size 100
