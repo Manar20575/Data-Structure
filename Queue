@@ -1,0 +1,70 @@
+#include <iostream>
+#define size 100
+using namespace std;
+class q {
+private:
+	int arr[size];
+	int front;
+	int rear;
+public:
+	q() {
+		front = 0;
+		rear = -1;
+	}
+	void enqueue() {
+		int item;
+		if (rear >= size) {
+			cout << "q is overflow\n";
+			exit(0);
+		}
+		else {
+			cout << "Enter the element of q : \n";
+			cin >> item;
+			rear += 1;
+			arr[rear] = item;
+		}
+	}
+	void dequeue() {
+		int item;
+		if (rear < front) {
+			front = 0;
+			rear = -1;
+			cout << "stack is underflow\n";
+			exit(0);
+		}
+		else {
+			item = arr[front];
+			front += 1;
+		}
+	}
+	void display() {
+		for (int i = front; i <= rear;i++) {
+			cout << arr[i] << " ";
+		}
+	}
+};
+int main() {
+	q q1;
+	int choise;
+	char c;
+	do {
+		cout << "1.enqueue\n2.dequeue\n3.display\n";
+		cin >> choise;
+		switch (choise)
+		{
+		case 1:
+			q1.enqueue();
+			break;
+		case 2:
+			q1.dequeue();
+			break;
+		case 3:
+			q1.display();
+			break;
+		default:
+			cout << "u entre wrong choice\n";
+		}
+		cout << "to cont typing c/C\n";
+		cin >> c;
+	} 		while (c == 'c' || c == 'C');
+}
